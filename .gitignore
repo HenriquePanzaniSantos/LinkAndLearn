@@ -178,5 +178,5 @@ google-credentials.json
 
 # Chaves e arquivos sensíveis
 *.pem
-gerar_chaves.py  # (ou o nome do seu arquivo gerador)
+gerar_chaves.py
 gerar_voucher.py
