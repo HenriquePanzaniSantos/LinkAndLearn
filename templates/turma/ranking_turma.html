@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="pagina-inicial">
+    <header class="cabecalho">
+        <img src="{% static 'assets/logo/Logo(2).png' %}" alt="Logo da Plataforma" />
+    </header>
+
+    <main class="principal">
+        
+        {% include 'partials/_menu_lateral.html' %}
+
+        <section class="conteudo">
+            <h2 class="cards__titulo">Ranking da Turma: {{ turma.nome }}</h2>
+            
+               <p style="margin-bottom: 1rem;">
+                    <a href="{% url 'painel_turma' turma.id %}" class="link-voltar">
+                        &larr; Voltar para o mural da turma
+                    </a>
+                </p>
+
+            <div class="alunos-table-container">
+                <table class="alunos-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 100px;">Posição</th>
+                            <th>Nome do Aluno</th>
+                            <th style="width: 150px;">Pontos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% for insc in inscricoes %}
+                        <tr>
+                            <td>{{ forloop.counter }}º</td>
+                            
+                            <td>{{ insc.aluno.get_full_name|default:insc.aluno.email }}</td>
+                            
+                            <td>{{ insc.pontos }}</td>
+                        
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3">Nenhum aluno inscrito nesta turma ainda.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+{% endblock %}

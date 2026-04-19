@@ -1,0 +1,29 @@
+{% load static %}
+
+<button class="btn-menu-mobile" id="btnMenu">☰</button>
+<div class="overlay-menu" id="overlayMenu"></div>
+
+<section class="menu-lateral">
+    <nav class="menu-lateral__navegacao">
+        <a href="{% url 'painel' %}"><img src="{% static '/assets/ícones/home-agreement (1).png' %}"> Painel Principal</a>
+        
+        {% if user.tipo_usuario == 'professor' %}
+            <a href="{% url 'criar_turma' %}"><img src="{% static '/assets/ícones/more.png' %}"> Criar Nova Turma</a>
+        {% endif %}
+        
+        {% if user.tipo_usuario == 'aluno' %}
+            <a href="{% url 'entrar_turma' %}"><img src="{% static 'assets/ícones/presentation (1).png' %}"> Entrar em Turma</a>
+            
+            <a href="{% url 'minhas_conquistas' %}"> 
+                <img src="{% static '/assets/ícones/triumph (1).png' %}"> Conquistas
+            </a>
+        {% endif %}
+        
+        <form action="{% url 'logout' %}" method="POST" class="logout-form">
+            {% csrf_token %}
+            <button type="submit" class="menu-lateral__link-button">
+                <img src="{% static '/assets/ícones/logout.png' %}"> Sair
+            </button>
+        </form>
+    </nav>
+</section>

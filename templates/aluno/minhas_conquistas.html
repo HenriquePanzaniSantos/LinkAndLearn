@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="pagina-inicial">
+    <header class="cabecalho">
+        <img src="{% static 'assets/logo/Logo(2).png' %}" alt="Logo da Plataforma" />
+    </header>
+
+    <main class="principal">
+        
+        {% include 'partials/_menu_lateral.html' %}
+
+        <section class="conteudo conteudo-gamificacao">
+            
+            <div class="card-nivel">
+                <div class="perfil-info">
+                    <div class="avatar-grande">
+                        {% if user.foto %}
+                            <img src="{{ user.foto.url }}" alt="Avatar">
+                        {% else %}
+                            <div class="avatar-placeholder">{{ user.first_name|first }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="dados-nivel">
+                        <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+                        <span class="badge-nivel">Nível {{ nivel_atual }}</span>
+                        
+                        <div class="xp-container">
+                            <div class="xp-info">
+                                <span>{{ xp_atual }} XP</span>
+                                <small>Próximo nível: {{ xp_proximo_nivel }} XP</small>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" style="width: {{ porcentagem_xp }}%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>🎯 Atividades</h3>
+                    <p class="stat-numero">{{ total_atividades_concluidas }}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>🔥 Dias Seguidos</h3>
+                    <p class="stat-numero">{{ ofensiva }}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>🏆 Medalhas</h3>
+                    <p class="stat-numero">{{ total_medalhas }}/{{ total_possivel }}</p>
+                </div>
+            </div>
+
+            <h3 class="titulo-secao">Galeria de Medalhas</h3>
+            
+            <div class="conquistas-grid">
+                
+                {% for conquista in todas_conquistas %}
+                    <div class="conquista-card {% if not conquista.conquistada %}bloqueada{% endif %}">
+                        <div class="icone-conquista">
+                            <img src="{% static 'assets/medalhas/' %}{{ conquista.imagem_arquivo }}" 
+                                 alt="{{ conquista.titulo }}"
+                                 onerror="this.src='{% static 'assets/medalhas/default.png' %}'"> 
+                        </div>
+                        <div class="info-conquista">
+                            <h4>{{ conquista.titulo }}</h4>
+                            <p>{{ conquista.descricao }}</p>
+                            
+                            {% if not conquista.conquistada %}
+                                <span class="tag-bloqueada">🔒 Bloqueada</span>
+                            {% else %}
+                                <span class="tag-data">Obtido em: {{ conquista.data_conquista|date:"d/m/Y" }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>Nenhuma conquista cadastrada no sistema ainda.</p>
+                {% endfor %}
+
+            </div>
+
+        </section>
+    </main>
+</div>
+{% endblock %}

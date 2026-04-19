@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="pagina-inicial">
+    <header class="cabecalho cabecalho-painel">
+        <img src="{% static 'assets/logo/Logo(2).png' %}" alt="Logo da Plataforma" />
+        
+        <div class="cabecalho__info-usuario">
+            {% if user.tipo_usuario == 'aluno' and gamificacao %}
+                <div class="gamificacao-container">
+                    <div class="gami-topo">
+                        <span class="gami-nivel">Nível {{ gamificacao.nivel }}</span>
+                        <span class="gami-titulo">{{ gamificacao.titulo }}</span>
+                    </div>
+                    <div class="gami-barra-fundo">
+                        <div class="gami-barra-progresso" style="width: {{ gamificacao.porcentagem }}%;"></div>
+                    </div>
+                    <div class="gami-numeros">
+                        {{ gamificacao.xp_atual }} / {{ gamificacao.xp_meta }} XP
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </header>
+
+    <main class="principal">
+        
+        {% include 'partials/_menu_lateral.html' %}
+
+        <section class="conteudo">
+            {% include 'partials/_messages.html' %}
+            
+            <section class="banner">
+                <img class="banner__imagem" src="{% static 'assets/imagens/Banner(2).png' %}" alt="banner da plataforma">
+                <h1 class="banner__titulo">Bem-vindo(a), {{ user.first_name|default:user.email }}!</h1>
+            </section>
+          
+            <section class="galeria">
+                <div class="cards">
+                    <h2 class="cards__titulo">{{ titulo_secao }}</h2>
+                    <ul class="cards__lista">
+                        
+                        {% for turma in turmas %}
+                        <li class="card">
+                            {% if user.tipo_usuario == 'professor' %}
+                            <div class="card-controls-container"> 
+                                <form method="POST" action="{% url 'deletar_turma' turma.id %}" class="card-controls__delete-form">
+                                    {% csrf_token %}
+                                    <button type="button" 
+                                            class="card-controls__delete-btn" 
+                                            title="Deletar Turma"
+                                            onclick="confirmarExclusao(this)">
+                                        &times;
+                                    </button>
+                                </form>
+                            </div>
+                            {% endif %}
+                            
+                            <a href="{% url 'painel_turma' turma.id %}">
+                                <img class="card__imagem" src="{{ turma.get_capa }}" alt="imagem da turma">
+                            </a>
+                            
+                            <div class="card__info">
+                                <p class="card__titulo">{{ turma.nome }}</p>
+                                <div class="card__texto">
+                                    {% if user.tipo_usuario == 'professor' %}
+                                        <p class="card__descricao">Código de Acesso: <strong>{{ turma.codigo_acesso }}</strong></p>
+                                    {% else %}
+                                        <p class="card__descricao">{{ turma.descricao|truncatewords:10 }}</p> 
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </li>
+                        
+                        {% empty %}
+                        <li class="sem-turmas-aviso" style="width: 100%;">
+                            <div class="sem-turmas-container">
+                                {% if user.tipo_usuario == 'professor' %}
+                                    Você ainda não criou nenhuma turma. <a href="{% url 'criar_turma' %}" class="link-destaque">Crie sua primeira turma!</a>
+                                {% else %}
+                                    Você ainda não está inscrito(a) em nenhuma turma. <a href="{% url 'entrar_turma' %}" class="link-destaque">Entre em uma turma!</a>
+                                {% endif %}
+                            </div>
+                        </li>
+                        {% endfor %}
+                        
+                    </ul>
+                </div>
+            </section>
+        </section>
+    </main>
+</div>
+{% endblock %}

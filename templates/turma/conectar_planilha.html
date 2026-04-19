@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="pagina-inicial">
+    <header class="cabecalho">
+        <img src="{% static 'assets/logo/Logo(2).png' %}" alt="Logo da Plataforma" />
+    </header>
+
+    <main class="principal">
+        
+        {% include 'partials/_menu_lateral.html' %}
+
+        <section class="conteudo">
+            
+            <p>
+                <a href="{% url 'painel_turma' turma.id %}" class="link-voltar">
+                    &larr; Voltar para o mural da turma
+                </a>
+            </p>
+
+            <div class="form-wrapper">
+                <div class="form-card">
+                    
+                    <div class="form-header">
+                        <h2 class="form-title">Conectar Planilha de Notas</h2>
+                        <p class="form-subtitle">Configuração para a turma: <strong>{{ turma.nome }}</strong></p>
+                    </div>
+
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label for="emailRobo">1. Copie o e-mail do nosso robô:</label>
+                            <div class="input-com-botao">
+                                <input type="text" value="{{ email_robo }}" id="emailRobo" readonly>
+                                <button type="button" onclick="copiarEmail()" class="btn-save">
+                                    Copiar
+                                </button>
+                            </div>
+                            <small id="msgCopiado" hidden>
+                                ✓ E-mail copiado!
+                            </small>
+                        </div>
+
+                        <hr class="divider">
+
+                        <div class="passo-instrucao">
+                            <label>2. No Google Drive:</label>
+                            <ul>
+                                <li>Crie uma Planilha Google.</li>
+                                <li>Clique no botão <strong>Compartilhar</strong>.</li>
+                                <li>Cole o e-mail do robô acima e dê permissão de <strong>Editor</strong>.</li>
+                                <li>Copie o link da planilha.</li>
+                            </ul>
+                        </div>
+
+                        <hr class="divider">
+
+                        <div class="form-group">
+                            <label for="link_planilha">3. Cole o link da planilha aqui:</label>
+                            <input type="url" name="link_planilha" id="link_planilha" 
+                                   placeholder="https://docs.google.com/spreadsheets/d/..." required>
+                        </div>
+
+                        <div class="form-actions">
+                            <a href="{% url 'painel_turma' turma.id %}" class="btn-cancel">Cancelar</a>
+                            <button type="submit" class="btn-save">Conectar e Testar</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script>
+    function copiarEmail() {
+        var copyText = document.getElementById("emailRobo");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(copyText.value);
+        
+        var msg = document.getElementById("msgCopiado");
+        msg.removeAttribute("hidden");
+        msg.style.color = "var(--success)";
+        
+        setTimeout(function(){
+            msg.setAttribute("hidden", "true");
+        }, 3000);
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,1517 @@
+/* ========================================================== */
+/* 1. VARIÁVEIS E CONFIGURAÇÕES GERAIS                        */
+/* ========================================================== */
+:root {
+    /* Cores Principais */
+    --primary: #7B78E5;
+    --primary-hover: #5a57b3;
+    --bg-body: #F8F9FA;
+    --bg-white: #FFFFFF;
+    
+    /* Textos */
+    --text-dark: #212529;
+    --text-medium: #495057;
+    --text-light: #6C757D;
+    
+    /* Bordas e Elementos */
+    --border: #DEE2E6;
+    --border-input: #CED4DA;
+    
+    /* Status */
+    --danger: #DC3545;
+    --success: #198754;
+    --warning: #ffc107;
+    
+    /* Fonte */
+    --font-main: 'Poppins', sans-serif;
+}
+
+/* Reset Minimalista */
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, img, ul, li, form, label, table, tbody, thead, tr, th, td, header, footer, section, nav, button, input {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    box-sizing: border-box;
+}
+
+body {
+    line-height: 1.5;
+    font-family: var(--font-main);
+    min-height: 100vh;
+    background-color: var(--bg-body);
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+a:hover { color: var(--primary-hover); }
+
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
+
+/* ========================================================== */
+/* 2. LAYOUT PRINCIPAL                                        */
+/* ========================================================== */
+.pagina-inicial {
+    max-width: 1440px;
+    padding: 1.5rem;
+    margin: 0 auto;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.principal {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.conteudo {
+    flex-grow: 1;
+    width: 100%;
+    padding: 0 2rem;
+}
+
+.centralizar-conteudo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+/* Link de "Voltar" */
+.link-voltar {
+    color: #6C757D !important;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.link-voltar:hover {
+    color: var(--primary) !important; /* Fica Roxo ao passar o mouse */
+}
+
+/* ========================================================== */
+/* 3. CABEÇALHO, HEADER & GAMIFICAÇÃO                         */
+/* ========================================================== */
+.cabecalho, .cabecalho-painel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.5rem;
+    padding-bottom: 0.8rem;
+    margin-bottom: 1.5rem; 
+    
+    border-bottom: 1px solid var(--border);
+    gap: 20px;
+}
+
+.cabecalho img {
+    height: 70px; 
+    width: auto;
+    max-width: 160px; 
+    object-fit: contain;
+    margin-top: 5px;  
+    align-self: flex-start;
+    display: block;
+}
+.cabecalho__info-usuario { min-width: 250px; }
+
+/* Gamificação (Widget) */
+.gamificacao-container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border: 1px solid var(--border);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.gami-topo {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: var(--text-dark);
+}
+
+.gami-nivel { color: var(--primary); }
+
+.gami-titulo {
+    color: var(--text-medium);
+    font-size: 0.85rem;
+    background: #f0f0f0;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+.gami-barra-fundo {
+    width: 100%;
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.gami-barra-progresso {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), #9d46ff);
+    border-radius: 5px;
+    transition: width 0.5s ease-in-out;
+}
+
+.gami-numeros {
+    text-align: right;
+    font-size: 0.75rem;
+    color: var(--text-medium);
+    font-weight: 600;
+}
+
+/* ========================================================== */
+/* 4. MENU LATERAL                                            */
+/* ========================================================== */
+.menu-lateral {
+    position: sticky;
+    padding-right: 2rem;
+    min-width: 250px;
+    border-right: 1px solid var(--border);
+}
+
+.menu-lateral__navegacao {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-lateral__navegacao a,
+.menu-lateral__link-button {
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    padding: 8px 12px;
+    color: var(--text-medium);
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+}
+
+.menu-lateral__navegacao a:hover,
+.menu-lateral__link-button:hover {
+    color: var(--primary);
+    background-color: var(--bg-body);
+}
+
+.menu-lateral__navegacao a.active { 
+    font-weight: 600;
+    color: var(--primary);
+    background-color: #E9ECEF;
+}
+
+.menu-lateral__navegacao img {
+    margin-right: 1rem;
+    width: 20px;
+    height: 20px;
+    opacity: 0.7;
+}
+.menu-lateral__navegacao a.active img { opacity: 1; }
+
+.logout-form { margin-top: auto; }
+
+/* ========================================================== */
+/* 5. BANNER & TAGS                                           */
+/* ========================================================== */
+
+.tags__tag {
+    background-color: #E9ECEF;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .6rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease; /* Transição suave para background e borda */
+}
+
+/* Define a cor cinza inicial (#6C757D) */
+.tag__link {
+    color: #6C757D !important;
+    font-weight: 500;
+    text-decoration: none;
+    display: block;
+    transition: color 0.2s ease-in-out; /* Transição suave para a cor do texto */
+}
+
+/* Quando passar o mouse na CAIXA INTEIRA (.tags__tag), o link dentro muda de cor */
+.tags__tag:hover .tag__link {
+    color: var(--primary) !important; /* Fica Roxo */
+}
+
+/* Mantém o comportamento de mudar o fundo da caixa levemente */
+.tags__tag:hover {
+    background-color: #e2e6ea; /* Um cinza um pouco mais escuro no fundo */
+    border-color: #dae0e5;
+}
+
+.banner {
+    width: 100%;
+    max-width: 100%; /* Impede o vazamento */
+    position: relative; /* Essencial para o título ficar dentro */
+    margin-bottom: 2rem;
+    border-radius: 20px;
+    overflow: hidden; /* Corta qualquer coisa que tente vazar */
+    background-color: #000; /* Fundo preto caso a imagem demore a carregar */
+}
+
+.banner__imagem {
+    width: 100%;
+    height: auto;
+    min-height: 150px;
+    max-height: 250px;
+    object-fit: cover;
+    display: block;
+    opacity: 0.8; /* Escurece um pouco a imagem para o texto aparecer melhor */
+}
+
+.banner__titulo {
+    position: absolute !important; /* Força o texto a ficar DENTRO da imagem */
+    bottom: 20px;
+    left: 20px;
+    right: 20px; /* Garante que o texto não saia pela direita */
+    color: #FFFFFF;
+    font-size: clamp(1.2rem, 5vw, 2.1rem); /* Fonte fluida: diminui sozinha no celular */
+    font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    margin: 0;
+    z-index: 5;
+    pointer-events: none; /* Evita que o texto atrapalhe cliques no banner */
+}
+/* ========================================================== */
+/* 6. CARDS (TURMAS, ATIVIDADES & ESTADOS VAZIOS)             */
+/* ========================================================== */
+
+.cards__titulo {
+    color: var(--primary);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.badge-aviso {
+    display: inline-block;
+    background-color: #E9ECEF;
+    color: #6C757D;             
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 50px;
+    border: 1px solid #DEE2E6;
+    margin-left: 10px;
+    vertical-align: middle;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cards__lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.card {
+    position: relative;
+    background-color: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.card a { display: block; color: inherit; }
+
+.card__imagem {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    object-position: center; 
+    border-radius: 8px 8px 0 0; 
+    display: block;         
+}
+
+.card__info {
+    padding: 1rem 1.2rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card__descricao {
+    font-size: 0.95rem;
+    color: var(--text-light);
+}
+
+/* Card Controls */
+.card-controls-container {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 10;
+}
+
+.card-controls__delete-btn {
+    background: none;
+    border: none;
+    color: var(--text-dark);
+    font-size: 1.6rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, color 0.2s;
+}
+.card-controls__delete-btn:hover { color: var(--danger); transform: scale(1.1); }
+
+/* Mural de Atividades (Lista Vertical) */
+.mural-atividades .cards__lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.atividade-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+}
+
+.atividade-card__titulo {
+    font-size: 1.5rem !important;
+    color: var(--text-medium) !important;
+}
+
+.atividade-card__actions .populares__link {
+    background: var(--primary);
+    color: var(--bg-white);
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+.atividade-card__actions .populares__link:hover { background-color: var(--primary-hover); }
+
+/* Avisos de "Vazio" */
+.sem-turmas-aviso, .sem-atividades-aviso {
+    grid-column: 1 / -1;
+    width: 100%;
+}
+
+.sem-turmas-container, .sem-atividades-aviso {
+    padding: 3rem 20px;
+    color: #ADB5BD;
+    text-align: center;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px dashed #dee2e6;
+}
+
+.link-destaque {
+    color: #0d6efd;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.atividade-card__descricao a {
+    color: #0d6efd; /* Azul clássico de link */
+    text-decoration: underline;
+    font-weight: 200;
+    word-break: break-word; /* Garante que links longos não vazem do card */
+}
+
+.atividade-card__descricao a:hover {
+    color: #0a58ca; /* Azul um pouco mais escuro ao passar o mouse */
+}
+
+/* 2. Configuração do Rodapé (Datas e Linha Separadora) */
+.atividade-card__info-footer {
+    margin-top: auto; /* Empurra este bloco para o final do card */
+    border-top: 1px solid var(--border); /* Cria a linha separadora */
+    padding-top: 15px; /* Espaço entre a linha e o texto */
+    margin-top: 20px;  /* Espaço entre o conteúdo de cima e a linha */
+    
+    /* Organização das datas */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Espaço entre a data de postagem e entrega */
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+/* ========================================================== */
+/* ÁREA DE ENTREGA (CLEAN DESIGN)                             */
+/* ========================================================== */
+
+.conclusao-form {
+    display: flex;
+    flex-wrap: wrap;        
+    gap: 10px;           
+    background-color: transparent; 
+    border: none;                
+    padding: 10px 0;   
+    margin-top: 15px;
+    align-items: center;
+}
+
+.conclusao-input {
+    flex: 1;          
+    min-width: 200px;
+    padding: 14px 18px;   
+    border: 1px solid var(--border-input);
+    background-color: #fff;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--text-dark);
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04); 
+    transition: all 0.3s ease;
+}
+
+.conclusao-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(108, 92, 231, 0.15); /* Brilho roxo suave */
+}
+
+/* 3. O Botão (Com sombra para destacar) */
+.conclusao-button {
+    background-color: var(--primary);
+    color: var(--bg-white);
+    border: none;
+    border-radius: 8px;
+    padding: 14px 28px;     /* Mesma altura do input */
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 4px 10px rgba(108, 92, 231, 0.25); /* Sombra colorida no botão */
+}
+
+.conclusao-button:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px); /* Efeito de subida leve */
+}
+
+/* 4. Os Pontos (Transformado em Etiqueta Bonita) */
+.conclusao-pontos {
+    width: 100%;            /* Força ir para a linha de baixo */
+    display: flex;
+    justify-content: flex-end; /* Alinha tudo à direita */
+    align-items: center;
+    gap: 6px;               /* Espaço entre ícone e texto */
+    
+    margin-top: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary);  /* Texto Roxo */
+}
+
+/* Adiciona um ícone de Diamante automaticamente antes do texto */
+.conclusao-pontos::before {
+    content: '💎';          /* Ícone visual */
+    font-size: 1.1rem;
+}
+
+/* ========================================================== */
+/* 7. FORMULÁRIOS & AUTENTICAÇÃO                              */
+/* ========================================================== */
+.login-container {
+    max-width: 700px;
+    width: 100%;
+    margin: 3rem auto;
+    padding: 3.5rem;
+    background-color: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.login-container--wide { max-width: 600px; }
+
+.login__titulo {
+    color: var(--primary);
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login__subtitulo {
+    text-align: center;
+    color: var(--text-dark);
+    margin-bottom: 2rem;
+    font-size: 1rem;
+}
+
+.login__form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-medium);
+}
+
+.login__form input[type="text"],
+.login__form input[type="email"],
+.login__form input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-input);
+    border-radius: 6px;
+    font-size: 1rem;
+    color: var(--text-medium);
+    margin-bottom: 1rem;
+}
+
+.login__form input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(123, 120, 229, 0.25);
+}
+
+.login__botao {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--primary);
+    color: var(--bg-white);
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.login__botao:hover { background-color: var(--primary-hover); }
+
+/* Links de Rodapé e Ajuda */
+.login__footer-text {
+    margin-top: 20px;
+    color: var(--text-dark);
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+.link-autenticacao {
+    color: var(--primary);
+    font-weight: 600;
+}
+.link-autenticacao:hover { text-decoration: underline; }
+
+/* Mensagens de Erro e Ajuda */
+.login__erro, .errorlist {
+    color: var(--danger);
+    background-color: #F8D7DA;
+    border: 1px solid #F5C6CB;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    list-style: none;
+}
+
+/* ========================================================== */
+/* 8. TABELAS (GERAL & ALUNOS)                                */
+/* ========================================================== */
+.alunos-table-container {
+    background: var(--bg-white);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    overflow-x: auto;
+}
+
+.alunos-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.alunos-table th, .alunos-table td {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-medium);
+}
+
+.alunos-table th {
+    background: var(--bg-body);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+}
+
+.alunos-table tr:hover { background-color: #F8F9FA; }
+.alunos-table tr:last-child td { border-bottom: none; }
+
+.tabela-vazia {
+    text-align: center;
+    padding: 2rem !important;
+    font-style: italic;
+    color: var(--text-light);
+}
+
+.header-actions {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+/* ========================================================== */
+/* 9. MENSAGENS E ALERTAS DO SISTEMA                          */
+/* ========================================================== */
+.messages-container {
+    max-width: 1440px;
+    margin: 1rem auto 0;
+    padding: 0 1.5rem;
+}
+
+.message {
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+}
+.message.success { color: #0f5132; background-color: #d1e7dd; }
+.message.error { color: #842029; background-color: #f8d7da; }
+.message.warning { color: #664d03; background-color: #fff3cd; }
+
+/* ========================================================== */
+/* 10. PÁGINAS ESPECÍFICAS (Conectar Planilha / Ações)        */
+/* ========================================================== */
+.card-centralizado {
+    max-width: 600px;
+    width: 100%;
+    padding: 2rem;
+    margin: 0 auto;
+}
+
+.passo-instrucao {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border);
+}
+
+.input-com-botao {
+    display: flex;
+    gap: 10px;
+    margin-top: 0.5rem;
+}
+
+.btn-copiar {
+    background: var(--text-light);
+    color: var(--bg-white);
+    border: none;
+    padding: 0 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-sucesso {
+    background: var(--success);
+    color: var(--bg-white);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    flex: 2;
+}
+
+.botoes-acao-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 1.5rem;
+}
+
+/* ========================================================== */
+/* 11. RODAPÉ                                                 */
+/* ========================================================== */
+.rodape {
+    background-color: var(--bg-white);
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-light);
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+}
+
+.rodape__icones { display: flex; gap: 1rem; }
+.rodape__icones img {
+    width: 24px;
+    height: 24px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+.rodape__icones a:hover img { opacity: 1; }
+
+/* ========================================================== */
+/* 12. FORMULÁRIOS DE CRIAÇÃO (ATIVIDADES/TURMAS)             */
+/* ========================================================== */
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    width: 100%;
+}
+
+.form-card {
+    background: var(--bg-white);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    width: 100%;
+    max-width: 800px;
+    border: 1px solid var(--border);
+}
+
+.form-header { text-align: center; margin-bottom: 30px; }
+.form-title { color: var(--primary); margin-bottom: 5px; font-size: 1.8rem; font-weight: 600; }
+.form-subtitle { color: var(--text-light); font-size: 1rem; }
+
+.form-group { margin-bottom: 20px; display: flex; flex-direction: column; }
+.form-group label { font-weight: 600; margin-bottom: 8px; color: var(--text-dark); font-size: 0.95rem; }
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group textarea,
+.form-group select {
+    padding: 12px;
+    border: 1px solid var(--border-input);
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 100%;
+    font-family: inherit;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(123, 120, 229, 0.25);
+}
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.divider { border: 0; border-top: 1px solid #eee; margin: 25px 0; }
+
+/* Switch / Checkbox Customizado */
+.checkbox-group {
+    flex-direction: row; align-items: center; gap: 15px;
+    background: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #eee;
+}
+.toggle-switch { position: relative; display: inline-block; width: 50px; height: 26px; flex-shrink: 0; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
+.slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+input:checked + .slider { background-color: var(--primary); }
+input:checked + .slider:before { transform: translateX(24px); }
+
+/* Botões do Form */
+.btn-save { background-color: var(--primary); color: white; padding: 12px 30px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; }
+.btn-save:hover { background-color: var(--primary-hover); }
+.btn-cancel { color: var(--text-medium); padding: 10px 20px; text-decoration: none; }
+.btn-cancel:hover { background-color: #f0f0f0; border-radius: 8px; }
+.form-actions { display: flex; justify-content: flex-end; align-items: center; gap: 15px; margin-top: 30px; }
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+}
+
+/* ========================================================== */
+/* CONTROLES DO PROFESSOR (EDITAR / EXCLUIR)                  */
+/* ========================================================== */
+
+.atividade-card {
+    position: relative; 
+}
+
+.atividade-controls {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 10;
+}
+
+/* Link de texto "Editar" */
+.btn-editar {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #000000;
+    text-decoration: none;
+    transition: color 0.2s;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2px 5px;
+    border-radius: 4px;
+}
+
+.btn-editar:hover {
+    color: var(--primary); /* Fica roxo ao passar o mouse */
+    text-decoration: underline;
+}
+
+/* Botão "X" para excluir */
+.btn-excluir {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: #000000;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.2s, color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-excluir:hover {
+    color: var(--primary); /* Fica roxo ao passar o mouse */
+    transform: scale(1.2);
+}
+
+.atividade-card__titulo {
+    padding-right: 80px; 
+}
+
+/* ========================================================== */
+/* 13. LAYOUT GAMIFICAÇÃO (MINHAS CONQUISTAS)                 */
+/* ========================================================== */
+
+/* Ajuste para a tela de conquistas usar mais espaço horizontal */
+.conteudo-gamificacao {
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* 1. CARD DE NÍVEL (TOPO) */
+.card-nivel {
+    background: var(--bg-white);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Sombra padrão */
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.perfil-info {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    width: 100%;
+}
+
+.avatar-placeholder {
+    width: 80px;
+    height: 80px;
+    background-color: var(--primary);
+    color: var(--bg-white);
+    font-size: 2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(123, 120, 229, 0.3); 
+}
+
+.dados-nivel { flex: 1; }
+
+.dados-nivel h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.badge-nivel {
+    display: inline-block;
+    background: var(--warning);
+    color: #fff; 
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Barra de Progresso XP */
+.xp-container { margin-top: 0.8rem; }
+
+.xp-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--text-medium);
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 10px;
+    background-color: #E9ECEF; /* Cinza claro padrão */
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    /* Gradiente Roxo */
+    background: linear-gradient(90deg, var(--primary) 0%, #9d46ff 100%);
+    border-radius: 10px;
+    transition: width 0.5s ease-in-out;
+}
+
+/* 2. STATS GRID (Os 3 quadrados com números) */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.stat-card {
+    background: var(--bg-white);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border); /* Borda padrão */
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--primary); /* Borda fica roxa no hover */
+}
+
+.stat-card h3 {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-numero {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary); /* Número Roxo */
+    margin: 0;
+}
+
+/* Responsividade para mobile */
+@media (max-width: 768px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .perfil-info { flex-direction: column; text-align: center; }
+    .avatar-placeholder { margin-bottom: 10px; }
+}
+
+/* 3. GRID DE CONQUISTAS (Medalhas) */
+.titulo-secao {
+    font-size: 1.4rem;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+    border-left: 5px solid var(--primary); /* Linha roxa na esquerda */
+    padding-left: 15px;
+    font-weight: 600;
+}
+
+.conquistas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.conquista-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+}
+
+.conquista-card:not(.bloqueada):hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(123, 120, 229, 0.15); /* Sombra roxa leve */
+    border-color: var(--primary);
+}
+
+.icone-conquista img {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 1.2rem;
+    object-fit: contain;
+}
+
+.info-conquista h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.info-conquista p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 1.2rem;
+    line-height: 1.5;
+}
+
+/* Estado Bloqueado */
+.conquista-card.bloqueada {
+    background-color: #F8F9FA; /* Fundo cinza bem claro */
+    border: 1px dashed var(--border); /* Borda tracejada */
+    opacity: 0.7;
+}
+
+.conquista-card.bloqueada .icone-conquista img {
+    filter: grayscale(100%);
+    opacity: 0.5;
+}
+
+.tag-bloqueada {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    background: #E9ECEF;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+/* Estado Desbloqueado (Data) */
+.tag-data {
+    font-size: 0.8rem;
+    color: var(--success);
+    font-weight: 600;
+    background-color: #d1e7dd;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+    
+
+.conquista-card {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+}
+
+.conquista-card:hover {
+    transform: translateY(-3px); /* Efeito suave ao passar o mouse */
+}
+
+.icone-conquista img {
+    max-width: 80px;
+    margin-bottom: 10px;
+}
+
+/* Estado Bloqueado */
+.conquista-card.bloqueada {
+    background-color: #f8f9fa; /* Fundo mais apagado */
+    border: 1px dashed #ccc;
+}
+
+.conquista-card.bloqueada .icone-conquista img {
+    filter: grayscale(100%);
+    opacity: 0.5;
+}
+
+.tag-bloqueada {
+    font-size: 0.8em;
+    color: #666;
+    font-weight: bold;
+}
+
+.tag-data {
+    font-size: 0.8em;
+    color: #28a745; /* Verde suave para data de conquista */
+}
+
+/* ========================================================== */
+/* 14. AJUSTES ESPECÍFICOS: RECUPERAÇÃO DE SENHA (LIMPO)      */
+/* ========================================================== */
+
+/* Limita a largura para ficar elegante */
+.login-container:has(.login__titulo:contains("Senha")), 
+.login-container:has(input[name="email"]) {
+    max-width: 450px; 
+}
+
+/* Textos descritivos centralizados */
+.login__texto-centro,
+.login__descricao {
+    text-align: center;
+    color: var(--text-medium);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+/* Texto de Erro (Link inválido) */
+.login__texto-erro {
+    color: var(--danger);
+    font-weight: 500;
+}
+
+/* Wrapper dos campos */
+.login__campo {
+    margin-bottom: 1.2rem;
+    width: 100%;
+}
+
+/* INPUTS: Garante que peguem 100% da largura e fiquem bonitos */
+.login__input,
+.login__campo input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-input);
+    border-radius: 6px;
+    font-size: 1rem;
+    color: var(--text-medium);
+    box-sizing: border-box; 
+    background-color: #fff;
+}
+
+.login__input:focus,
+.login__campo input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(123, 120, 229, 0.15);
+}
+
+/* TEXTO DE AJUDA (As regras da senha) */
+.login__help-text {
+    display: block;
+    color: var(--text-light); /* #888 substituído por variável */
+    font-size: 0.75rem;
+    margin-top: 8px;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 6px;
+    border-left: 3px solid var(--primary);
+    line-height: 1.4;
+}
+
+/* Arruma a lista (ul) que o Django gera dentro do help text */
+.login__help-text ul {
+    margin: 5px 0 0 0;
+    padding-left: 1.2rem;
+}
+.login__help-text li {
+    list-style-type: disc;
+    margin-bottom: 2px;
+}
+
+/* MENSAGENS DE ERRO DO CAMPO */
+.login__erro-campo {
+    color: var(--danger); /* #DC3545 substituído por variável */
+    font-size: 0.85rem;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+.rodape {
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center; 
+    padding: 1rem 2rem;       
+    background-color: var(--bg-white);
+    border-top: 1px solid var(--border);
+    width: 100%;
+}
+
+/* ========================================================== */
+/* 15. RESPONSIVIDADE COMPLETA (MOBILE & TABLET)              */
+/* ========================================================== */
+
+/* --- 1. REGRAS GERAIS (Garante que o Menu Mobile suma no PC) --- */
+.btn-menu-mobile,
+.overlay-menu {
+    display: none; /* Esconde o botão e o fundo escuro nas telas grandes */
+}
+
+/* --- 2. TABLETS E TELAS MÉDIAS (até 992px) --- */
+@media (max-width: 992px) {
+    .conteudo {
+        padding: 0 1rem; /* Reduz espaço lateral */
+    }
+    .menu-lateral {
+        min-width: 200px;
+        padding-right: 1rem;
+    }
+    .cards__lista {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
+
+/* --- 3. CELULARES (até 768px) - A MÁGICA DO APP ACONTECE AQUI --- */
+@media (max-width: 768px) {
+    
+    /* Cabeçalho: Escondendo Logo e Nível para não encavalar */
+    .cabecalho img,
+    .gamificacao-container {
+        display: none !important;
+    }
+
+    .cabecalho, .cabecalho-painel {
+        margin: 0;
+        padding: 0;
+        border: none; 
+    }
+
+    /* Banner: Jogando pro topo */
+    .banner {
+        margin-top: 0; 
+        margin-bottom: 1.5rem;
+        border-radius: 0; 
+        width: 100vw; 
+        margin-left: -1rem; 
+    }
+
+    .banner__imagem {
+        max-height: 180px; 
+    }
+
+    .banner__titulo {
+        font-size: 1.5rem;
+        left: 15px;
+        bottom: 15px;
+    }
+
+    /* Menu Gaveta (Drawer) */
+    .btn-menu-mobile {
+        display: flex; /* Mostra o botão hambúrguer no celular */
+        position: fixed; 
+        top: 15px;
+        left: 15px;
+        z-index: 1001; 
+        background: var(--bg-white);
+        color: var(--primary);
+        border: 1px solid var(--border);
+        border-radius: 8px; 
+        width: 45px;
+        height: 45px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        align-items: center;
+        justify-content: center;
+    }
+
+    .menu-lateral {
+        position: fixed;
+        top: 0;
+        left: -100%; /* Começa escondido */
+        width: 260px;
+        height: 100vh; 
+        background-color: var(--bg-white);
+        z-index: 1000; 
+        padding: 5rem 1.5rem 2rem 1.5rem; 
+        box-shadow: 4px 0 15px rgba(0,0,0,0.2);
+        transition: left 0.3s ease-in-out; 
+        border-right: none;
+    }
+
+    .menu-lateral.aberto {
+        left: 0; /* Desliza pra dentro da tela */
+    }
+
+    .menu-lateral__navegacao {
+        flex-direction: column;
+        overflow-x: hidden;
+    }
+
+    .overlay-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0.5);
+        z-index: 999; 
+    }
+    
+    .overlay-menu.ativo {
+        display: block; /* O JS ativa essa classe para mostrar o fundo */
+    }
+
+    .form-wrapper {
+        padding: 10px; /* Reduz a distância da borda da tela */
+    }
+
+    .form-card {
+        padding: 25px 15px; /* Reduz o padding interno para sobrar mais espaço para os campos */
+        width: 100%;
+        max-width: 100%; /* Permite ocupar toda a largura */
+        border-radius: 8px;
+    }
+
+    /* Ajusta os formulários de Login/Cadastro/Recuperação */
+    .login-container, 
+    .login-container--wide {
+        width: 95%;      /* Ocupa quase toda a largura */
+        max-width: 100%;
+        padding: 2rem 1.5rem; /* Menos espaço interno, mais espaço para conteúdo */
+        margin: 1rem auto;
+    }
+
+    /* ========================================= */
+    /* AJUSTE TELA DE CONQUISTAS NO CELULAR      */
+    /* ========================================= */
+    
+    /* 1. Os 3 cards do topo (Atividades, Dias, Medalhas) */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* Força exatamente 3 colunas */
+        gap: 8px; /* Espaço reduzido para caber na tela pequena */
+    }
+
+    .stat-card {
+        padding: 10px 5px; /* Diminui o respiro interno */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .stat-card h3 {
+        font-size: 0.75rem; /* Fonte menorzinha para o título caber */
+        margin-bottom: 5px;
+        text-align: center;
+    }
+
+    .stat-card .stat-numero {
+        font-size: 1.2rem; /* Número um pouco menor, mas em destaque */
+        margin: 0;
+    }
+
+    /* 2. Galeria de Medalhas da parte de baixo */
+    .conquistas-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Força 2 medalhas por linha */
+        gap: 10px;
+    }
+
+    .conquista-card {
+        padding: 10px;
+    }
+    
+    .icone-conquista img {
+        max-width: 50px; /* Garante que a imagem da medalha não fique gigante */
+        height: auto;
+    }
+
+/* --- 4. CELULARES PEQUENOS (até 480px) --- */
+@media (max-width: 480px) {
+    .cards__lista {
+        grid-template-columns: 1fr; /* Ocupa 100% da tela */
+    }
+}
+}
+
+/* ========================================= */
+    /* MENU DO PROFESSOR COM ROLAGEM HORIZONTAL  */
+    /* ========================================= */
+
+    .tags__lista {
+        display: flex;
+        flex-wrap: nowrap; /* Proíbe os botões de caírem para a linha de baixo */
+        gap: 12px; /* Espaçamento legal entre os cards */
+        overflow-x: auto; /* Ativa a mágica da rolagem horizontal! */
+        padding-bottom: 10px; /* Dá um respiro pro scroll não cortar a bordinha do card */
+        width: 100%;
+        
+        /* Esconde a barra de rolagem nativa para ficar mais bonito (estilo app) */
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE/Edge */
+    }
+
+    /* Esconde a barra de rolagem no Chrome/Safari/Brave */
+    .tags__lista::-webkit-scrollbar {
+        display: none; 
+    }
+
+    .tags__tag {
+        flex: 0 0 auto; /* O SEGREDO: impede que o card encolha. Ele mantém o tamanho e obriga a rolagem! */
+        min-width: 130px; /* Largura mínima para o texto caber bonitinho sem espremer */
+        margin: 0;
+    }
+
+    .tags__tag .tag__link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%; /* Garante que todos os cards fiquem da mesma altura */
+        text-align: center;
+        padding: 10px;
+        white-space: normal; /* Permite que textos longos como "Configurar Planilha" quebrem a linha DENTRO do card */
+        line-height: 1.2;
+    }
+
+    /* ========================================= */
+    /* AJUSTE DOS BOTÕES ROXOS (CELULAR)         */
+    /* ========================================= */
+
+    .btn-save, 
+    .conclusao-button { /* Adicionei a classe do botão de "Enviar Código" do HTML também, por garantia */
+        font-size: 0.85rem; /* Diminui o tamanho da letra */
+        padding: 8px 16px; /* Reduz a "gordura" (espaço interno) do botão */
+        width: auto; /* Garante que ele não tente ocupar a tela toda se não precisar */
+        min-width: 120px; /* Mantém um tamanho mínimo para não ficar espremido demais */
+    }
+
+    /* Mantém o formato do seu badge de aviso, mas com uma cor sutil para o ID */
+.badge-id {
+    background-color: #f0f0f0; /* Um cinza claro suave */
+    color: #555;               /* Texto grafite */
+    border: 1px solid #ccc;    /* Borda fina */
+    margin-left: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+}

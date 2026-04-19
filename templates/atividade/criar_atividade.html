@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="pagina-inicial">
+    <header class="cabecalho">
+        <img src="{% static 'assets/logo/Logo(2).png' %}" alt="Logo da Plataforma" />
+    </header>
+
+    <main class="principal">
+        
+        {% include 'partials/_menu_lateral.html' %}
+
+        <section class="conteudo">
+            
+           <p style="margin-bottom: 1rem;">
+                <a href="{% url 'painel_turma' turma.id %}" class="link-voltar">
+                    &larr; Voltar para o mural da turma
+                </a>
+            </p>
+            <div class="form-wrapper">
+                <div class="form-card">
+                    
+                    <div class="form-header">
+                        <h2 class="form-title">Adicionar Nova Atividade</h2>
+                        <p class="form-subtitle">Para a turma: <strong>{{ turma.nome }}</strong></p>
+                    </div>
+
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label for="{{ form.titulo.id_for_label }}">Título da Atividade</label>
+                            {{ form.titulo }}
+                            {% if form.titulo.errors %}
+                                <span style="color:red; font-size: 0.8rem">{{ form.titulo.errors.0 }}</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.descricao.id_for_label }}">Instruções / Descrição</label>
+                            {{ form.descricao }}
+                        </div>
+
+                        <hr class="divider">
+
+                        <div class="form-row">
+                            {# O campo de código de validação foi removido daqui #}
+                            <div class="form-group">
+                                <label for="{{ form.pontos.id_for_label }}">Quantidade de Pontos (XP)</label>
+                                {{ form.pontos }}
+                            </div>
+
+                            <div class="form-group form-group-codigo">
+                                <label for="{{ form.data_entrega.id_for_label }}">Data de Entrega</label>
+                                {{ form.data_entrega }}
+                            </div>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label class="toggle-switch">
+                                {{ form.vale_xp }}
+                                <span class="slider"></span>
+                            </label>
+                            <div style="display:flex; flex-direction:column;">
+                                <span style="font-weight:600; color:#212529;">Vale Nota/XP?</span>
+                                <small style="font-size:0.8rem; color:#6C757D;">Marque se contar pontos.</small>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <a href="{% url 'painel_turma' turma.id %}" class="btn-cancel">Cancelar</a>
+                            <button type="submit" class="btn-save">Salvar e Publicar</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+{% endblock %}

@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="pagina-inicial">
+    <header class="cabecalho cabecalho-painel">
+        <img src="{% static 'assets/logo/Logo(2).png' %}" alt="Logo da Plataforma" />
+        
+        <div class="cabecalho__info-usuario">
+            {% if user.tipo_usuario == 'aluno' and gamificacao %}
+                <div class="gamificacao-container">
+                    <div class="gami-topo">
+                        <span class="gami-nivel">Nível {{ gamificacao.nivel }}</span>
+                        <span class="gami-titulo">{{ gamificacao.titulo }}</span>
+                    </div>
+
+                    <div class="gami-barra-fundo">
+                        <div class="gami-barra-progresso" style="width: {{ gamificacao.porcentagem }}%;"></div>
+                    </div>
+
+                    <div class="gami-numeros">
+                        {{ gamificacao.xp_atual }} / {{ gamificacao.xp_meta }} XP
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        </header>
+
+    <main class="principal">
+       {% include 'partials/_menu_lateral.html' %}
+
+        <section class="conteudo">
+                {% include 'partials/_messages.html' %}
+            <section class="banner">
+                <img class="banner__imagem" src="{% static 'assets/imagens/Banner(2).png' %}" alt="banner da plataforma">
+                <h1 class="banner__titulo">{{ turma.nome }}</h1>
+            </section>
+            
+            <p class="turma-descricao">{{ turma.descricao|linebreaks }}</p>
+            
+            {% if user.tipo_usuario == 'professor' %}
+            <section class="tags">
+                <ul class="tags__lista">
+                    <li class="tags__tag"><a class="tag__link" href="{% url 'criar_atividade' turma.id %}">Adicionar Atividade</a></li>
+                    <li class="tags__tag"><a class="tag__link" href="{% url 'ver_alunos' turma.id %}">Ver Alunos</a></li>
+                    <li class="tags__tag"><a class="tag__link" href="{% url 'ranking_turma' turma.id %}">Ranking</a></li>
+                    
+                    {% if not turma.google_sheet_link %}
+                        <li class="tags__tag tags__tag--especial">
+                            <a class="tag__link tag__link--config" href="{% url 'conectar_planilha' turma.id %}"> 
+                                Configurar Planilha Google
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="tags__tag tags__tag--especial">
+                            <a class="tag__link tag__link--sheet" href="{{ turma.google_sheet_link }}" target="_blank">
+                                Abrir Planilha de Notas
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </section>
+            {% endif %}
+
+            {% if user.tipo_usuario == 'aluno' %}
+            <section class="tags">
+                <ul class="tags__lista">
+                    <li class="tags__tag"><a class="tag__link" href="{% url 'ranking_turma' turma.id %}">Ranking da disciplina</a></li>
+                </ul>
+            </section>
+            {% endif %}
+                
+            <hr class="separador-conteudo">
+
+            <div class="galeria">
+                <div class="cards mural-atividades">
+                    <h2 class="cards__titulo">Mural de Atividades</h2>
+                    <ul class="cards__lista">
+                        
+                        {% for atividade in atividades %}
+
+                        <li class="card atividade-card">
+                            
+                            {% if user.tipo_usuario == 'professor' %}
+                            <div class="atividade-controls">
+                                <a href="{% url 'editar_atividade' atividade.id %}" class="btn-editar">
+                                    Editar
+                                </a>
+
+                                <form action="{% url 'deletar_atividade' atividade.id %}" method="POST" 
+                                      onsubmit="return confirm('Tem certeza que deseja excluir a atividade &quot;{{ atividade.titulo }}&quot;?');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-excluir" title="Excluir Atividade">
+                                        &times;
+                                    </button>
+                                </form>
+                            </div>
+                            {% endif %}
+                            <div class="card__info">
+                                <p class="card__titulo atividade-card__titulo">
+                                    {{ atividade.titulo }}
+                                    
+                                    {% if user.tipo_usuario == 'professor' %}
+                                        <span class="badge-aviso badge-id">#ID: {{ atividade.id }}</span>
+                                    {% endif %}
+
+                                    {% if not atividade.vale_xp %}
+                                        <span class="badge-aviso">📢 Aviso</span>
+                                    {% endif %}
+                                </p>
+                                
+                                {% if atividade.descricao %}
+                                    <p class="atividade-card__descricao">{{ atividade.descricao|linebreaksbr|urlize }}</p>
+                                {% endif %}
+
+                                <div class="atividade-card__actions">
+                                    {% if atividade.arquivo %}
+                                        <a href="{{ atividade.arquivo.url }}" target="_blank" class="populares__link">Baixar Anexo</a>
+                                    {% endif %}
+                                </div>
+
+                                {% if user.tipo_usuario == 'aluno' %}
+                                    
+                                    {% if atividade.vale_xp %}
+    <div class="atividade-conclusao">
+        {% if atividade.id in concluidas_ids %}
+            <p class="conclusao-concluido">✅ Você já concluiu esta atividade.</p>
+        {% else %}
+            <form method="POST" action="{% url 'entregar_atividade' atividade.id %}" class="conclusao-form">
+                {% csrf_token %}
+                
+                {# O input de código SEMPRE aparece para atividades que valem XP #}
+                <input type="text" name="codigo" placeholder="Digite o Código/Voucher" class="conclusao-input" required>
+                <button type="submit" class="conclusao-button">Enviar Código</button>
+                
+                <span class="conclusao-pontos">Vale: {{ atividade.pontos }} pontos</span>
+            </form>
+        {% endif %}
+    </div>
+{% endif %}
+                                    
+                                {% endif %}
+                                <div class="atividade-card__info-footer">
+                                    <p class="card__data">{{ atividade.data_criacao|date:"d/m/Y" }}</p>
+                                    {% if atividade.data_entrega and atividade.vale_xp %}
+                                        <p class="card__data">Entrega: {{ atividade.data_entrega|date:"d/m/Y" }}</p>
+                                    {% endif %}
+                                </div>
+                                
+                            </div>
+                        </li>
+
+                        {% empty %}
+                            <li style="list-style: none; width: 100%;">
+                                <p class="sem-atividades-aviso">Nenhuma atividade foi postada nesta turma ainda.</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+{% endblock %}

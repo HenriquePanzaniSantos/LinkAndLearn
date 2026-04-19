@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="pagina-inicial">
+    <header class="cabecalho">
+        <img src="{% static 'assets/logo/Logo(2).png' %}" alt="Logo da Plataforma" />
+    </header>
+
+    <main class="principal">
+        
+        {% include 'partials/_menu_lateral.html' %}
+
+        <section class="conteudo">
+            
+            <p style="margin-bottom: 1rem;">
+                <a href="{% url 'painel' %}" class="link-voltar">
+                    &larr; Voltar para o Painel
+                </a>
+            </p>
+
+            <div class="form-wrapper">
+                <div class="form-card">
+                    
+                    <div class="form-header">
+                        <h2 class="form-title">Entrar em uma Turma</h2>
+                        <p class="form-subtitle">Digite o código de convite fornecido pelo seu professor.</p>
+                    </div>
+
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        {% for field in form %}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            
+                            {{ field }}
+                            
+                            {% if field.help_text %}
+                                <small style="color: grey; display: block; margin-top: 5px;">{{ field.help_text }}</small>
+                            {% endif %}
+
+                            {% if field.errors %}
+                                <span style="color:red; font-size: 0.8rem; display:block; margin-top: 5px;">
+                                    {{ field.errors.0 }}
+                                </span>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+
+                        <hr class="divider">
+
+                        <div class="form-actions">
+                            <a href="{% url 'painel' %}" class="btn-cancel">Cancelar</a>
+                            <button type="submit" class="btn-save">Entrar na Turma</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+{% endblock %}

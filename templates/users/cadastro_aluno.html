@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="login-container login-container--wide">
+    <h2 class="login__titulo">Criar Conta</h2>
+    <p class="login__subtitulo">Preencha seus dados para criar uma conta na plataforma.</p>
+
+    <form method="POST" class="login__form">
+        {% csrf_token %}
+        
+        {# Mantido exatamente como você pediu: Erros gerais no topo #}
+        {% for error in form.non_field_errors %}
+            <p class="login__erro">{{ error }}</p>
+        {% endfor %}
+
+        <div class="login__campo">
+            <label for="{{ form.first_name.id_for_label }}">Nome:</label>
+            {{ form.first_name }}
+            {{ form.first_name.errors }}
+        </div>
+        
+        <div class="login__campo">
+            <label for="{{ form.last_name.id_for_label }}">Sobrenome:</label>
+            {{ form.last_name }}
+            {{ form.last_name.errors }}
+        </div>
+        
+        <div class="login__campo">
+            <label for="{{ form.email.id_for_label }}">Email Institucional:</label>
+            {{ form.email }}
+            {{ form.email.errors }}
+        </div>
+        
+        <div class="login__campo">
+            <label for="{{ form.password1.id_for_label }}">Senha:</label>
+            {{ form.password1 }}
+
+            <div class="login__help-text">
+                {{ form.password1.help_text|safe }}
+            </div>
+
+            {{ form.password1.errors }}
+        </div>
+        
+        <div class="login__campo">
+            <label for="{{ form.password2.id_for_label }}">Confirmação de Senha:</label>
+            {{ form.password2 }}
+            {{ form.password2.errors }}
+        </div>
+
+        <button type="submit" class="login__botao">Criar Conta</button>
+    </form>
+    
+    <p class="login__footer-text">
+        Já tem uma conta? <a href="{% url 'login' %}" class="link-autenticacao">Faça o login aqui</a>
+    </p>
+</div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% load static %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    const COR_PRIMARIA = '#b9b9b9ff'; // Roxo da marca
+    const COR_PERIGO = '#7B78E5';      // Vermelho para exclusão
+
+    function confirmarExclusao(botao) {
+        Swal.fire({
+            title: 'Tem certeza?',
+            text: "Atenção: Apagar esta turma é permanente e excluirá todos os dados vinculados.",
+            icon: 'warning',
+            position: 'center',
+            showCancelButton: true,
+            confirmButtonColor: COR_PERIGO, 
+            cancelButtonColor: COR_PRIMARIA, 
+            confirmButtonText: 'Confirmar',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true,
+            allowOutsideClick: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                botao.form.submit();
+            }
+        });
+    }
+</script>
+
+{% if messages %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const COR_PRIMARIA_MSG = '#7B78E5';
+
+        {% for message in messages %}         
+            var type = "{{ message.tags }}";
+            var text = "{{ message|safe }}";
+            var textLower = text.toLowerCase(); 
+
+            if (type === 'danger') type = 'error';
+
+            // --- TIPO 1: CONQUISTAS (POPUP LIMPO NO CENTRO) ---
+            if (textLower.includes("medalha") || 
+                textLower.includes("nível") || 
+                textLower.includes("liderança") ||
+                textLower.includes("desbloqueou") || 
+                textLower.includes("ganhou:") ) { 
+                
+                Swal.fire({
+                    title: 'Parabéns!',
+                    html: text,
+                    icon: 'success',
+                    confirmButtonText: 'Incrível!',
+                    confirmButtonColor: COR_PRIMARIA_MSG,
+                    position: 'center'
+                });
+
+            } 
+            // --- TIPO 2: NOTIFICAÇÕES PADRÃO (TOAST NO CANTO) ---
+            else {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 4000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                });
+
+                Toast.fire({
+                    icon: type,
+                    title: text
+                });
+            }
+        {% endfor %}
+    });
+</script>
+{% endif %}
