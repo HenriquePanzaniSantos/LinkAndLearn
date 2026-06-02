@@ -8,7 +8,6 @@ with open("privada.pem", "rb") as f:
     private_key = RSA.importKey(f.read())
 
 def gerar_voucher_blindado(ra, nota, atividade_id):
-    # Incluímos o ID da atividade na string de dados
     # Formato: RA:173218|NOTA:10|ATIV:35
     mensagem_texto = f"RA:{ra}|NOTA:{nota}|ATIV:{atividade_id}"
     mensagem_bytes = mensagem_texto.encode('utf-8')
@@ -23,6 +22,6 @@ def gerar_voucher_blindado(ra, nota, atividade_id):
     print(f"\n✅ Voucher Gerado para Atividade {atividade_id}")
     print(f"Código: {voucher_final}\n")
 
-# EXEMPLO: Gere para o RA 173218, Nota 10 e Atividade 35
+# EXEMPLO
 gerar_voucher_blindado("254260", "10", "13")
 
